@@ -16,6 +16,7 @@ public class ProductServiceImpl implements ProductService {
 	
 	private final ProductRepository repository;
 	private final AuditService auditService;
+	private final LockService lockService;
 	
     @Override
     public List<Product> findAll() {
@@ -43,6 +44,16 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product update(Long id, Product product) {
 
+    	if (lockService.isLocked(id)) {
+
+            String lockedBy = lockService.getLockedBy(id);
+
+            if (!lockedBy.equals(SecurityUtil.getCurrentUsername())) {
+                throw new RuntimeException(
+                        "Producto bloqueado por: " + lockedBy);
+            }
+        }
+    	
         Product existing = findById(id);
 
         existing.setName(product.getName());
@@ -62,6 +73,15 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void delete(Long id) {
+    	
+    	if (lockService.isLocked(id)) {
+
+            String lockedBy = lockService.getLockedBy(id);
+
+            if (!lockedBy.equals(SecurityUtil.getCurrentUsername())) {
+                throw new RuntimeException("Producto bloqueado por: " + lockedBy);
+            }
+        }
     	
     	auditService.saveLog(
     	        SecurityUtil.getCurrentUsername(),
