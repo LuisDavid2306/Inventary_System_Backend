@@ -8,6 +8,10 @@ import org.springframework.stereotype.Repository;
 import com.cibertec.entity.User;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long>{
-	Optional<User> findByUsername(String username);
+public interface UserRepository extends JpaRepository<User, Long> {
+    
+    Optional<User> findByUsername(String username);
+    Optional<User> findByEmail(String email);
+    Optional<User> findByEmailAndActiveTrue(String email);
+    boolean existsByEmail(String email);
 }

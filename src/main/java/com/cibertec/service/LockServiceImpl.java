@@ -14,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 public class LockServiceImpl implements LockService {
 	
 	private final ProductLockRepository repository;
+	
+	
     @Override
     public void lockProduct(Long productId, String username) {
 
@@ -42,7 +44,8 @@ public class LockServiceImpl implements LockService {
 
         repository.deleteByProductId(productId);
     }
-
+    
+    
     @Override
     public boolean isLocked(Long productId) {
 

@@ -20,6 +20,7 @@ public class LockController {
 	
 	private final LockService lockService;
 
+
 	@PostMapping("/{productId}")
 	public ResponseEntity<?> lockProduct(
 	        @PathVariable Long productId) {

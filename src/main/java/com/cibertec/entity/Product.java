@@ -31,6 +31,8 @@ public class Product {
     private String description;
     private BigDecimal price;
     private Integer stock;
+    @Builder.Default
+    private Boolean active = true;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     
