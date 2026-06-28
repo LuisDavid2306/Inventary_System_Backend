@@ -1,6 +1,9 @@
 package com.cibertec.controller;
 
+import java.util.List;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cibertec.dto.AuthResponse;
 import com.cibertec.dto.LoginRequest;
 import com.cibertec.dto.RegisterRequest;
+
+import com.cibertec.entity.User;
 import com.cibertec.service.AuthService;
 
 import lombok.RequiredArgsConstructor;
@@ -20,7 +25,10 @@ import lombok.RequiredArgsConstructor;
 public class AuthController {
 	
 	private final AuthService authService;
-	
+	@GetMapping
+    public List<User> findAll() {
+        return authService.findAll();
+    }
 
     @PostMapping("/register")
     public String register(@RequestBody RegisterRequest request) {

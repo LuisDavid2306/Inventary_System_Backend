@@ -7,9 +7,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import com.cibertec.dto.LoginRequest;
 import com.cibertec.dto.RegisterRequest;
+import com.cibertec.entity.Product;
 import com.cibertec.entity.User;
 import com.cibertec.repository.UserRepository;
 import com.cibertec.security.JwtService;
@@ -59,5 +63,9 @@ public class AuthServiceImpl implements AuthService {
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(request.getEmail());
         return jwtService.generateToken(userDetails);
+    }
+    @Override
+    public List<User> findAll() {
+        return userRepository.findAll();  
     }
 }
